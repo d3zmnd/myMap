@@ -1,0 +1,32 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+input {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	top: 10px; 
+	left:210px;
+	height: 40px;
+	width:200px;
+	border: 0;
+	font-size: 20px;
+}
+
+.map {
+	margin: 0;
+	padding: 0;
+	height: 935px;
+	width:100%;
+}
+h2 {
+	margin: 0;
+	padding: 0;
+	
+}
+div {
+	font-size: 15px;
+	margin: 0;
+	padding: 0;
+}
