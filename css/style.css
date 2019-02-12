@@ -1,32 +1,20 @@
 body {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 10px 20px 20px;
+  font-family: Arial;
+  font-size: 16px;
 }
-input {
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	top: 10px; 
-	left:210px;
-	height: 40px;
-	width:200px;
-	border: 0;
-	font-size: 20px;
+#map-container {
+  padding: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc #ccc #999 #ccc;
+  -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+  width: 600px;
 }
-
-.map {
-	margin: 0;
-	padding: 0;
-	height: 935px;
-	width:100%;
-}
-h2 {
-	margin: 0;
-	padding: 0;
-	
-}
-div {
-	font-size: 15px;
-	margin: 0;
-	padding: 0;
+#map {
+  width: 1000px;
+  height: 1000px;
 }

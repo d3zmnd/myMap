@@ -1,77 +1,56 @@
 function initMap() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-        var markers = [];
-        var element = document.getElementById('map');
-        var options = {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 2,
-          center: latlng,
-          
-        };
-        
-        var map = new google.maps.Map(element, options);
+          center: {lat: -28.024, lng: 140.887}
+        });
 
-        marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title: "Your current location!"
+               
+          var markers = locations.map(function(location, i) {
+          var position = new google.maps.LatLng(location[0], location[1]);
+
+          // console.log(location[0]);
+          return new google.maps.Marker({
+            position: position,
             });
-        if(latlng){
-            var InfoWindow = new google.maps.InfoWindow({
-                content: '<h2>Your current location!</h2>'               
-                });
-            marker.addListener('click', function(){
-                InfoWindow.open(Map, marker);
-                });
-        }
 
-        // console.log(latlng);
-        
-        fetch("https://restcountries.eu/rest/v2/all")
-        .then(res => res.json())
-        .then(data => initialize(data))
-        .catch(err => console.log("Error:", err));
-
-        function initialize(countriesData) {
-            countries = countriesData;
-            countries.forEach(function (latlng, i, alpha3Code){
-                addMarker(countries[i], countries[i].name, countries[i].population, countries[i].alpha3Code, countries[i].area, countries[i].capital, countries[i].timezones);
-             
-             });
-             
-        }   
-
-        function addMarker(latlng, name, population, alpha3Code, area, capital, timezones) {
+            // if(position){
             
-            var position = new google.maps.LatLng(latlng.latlng[0], latlng.latlng[1]);
-            var marker = new google.maps.Marker({
-                position: position,
-                map: map,
-                });
-                markers.push(latlng);
-                // console.log(markers);
+            //     var InfoWindow = new google.maps.InfoWindow({
+            //         content: '<h2>Country: '+names+'</h2>'
+            //         +'<div>Capital: '+capital+'</div>'
+            //         +'<div>Population: '+population+'</div>'
+            //         +'<div>alpha3Code: '+alpha3Code+'</div>'
+            //         +'<div>Area: '+area+' sq. m.</div>'
+            //         +'<div>Timezones: '+timezones+'</div>'
+            //         +'<div>Coordinates: '+location[0]+', '+location[1]+'</div>'                    
+            //         });
+            // marker.addListener('click', function(){
+            //         InfoWindow.open(map, google.maps.Marker);
+            //         });
+            
+            // }
+        });
 
-            if(name){
-            
-                var InfoWindow = new google.maps.InfoWindow({
-                    content: '<h2>Country: '+name+'</h2>'
-                    +'<div>Capital: '+capital+'</div>'
-                    +'<div>Population: '+population+'</div>'
-                    +'<div>alpha3Code: '+alpha3Code+'</div>'
-                    +'<div>Area: '+area+' sq. m.</div>'
-                    +'<div>Timezones: '+timezones+'</div>'
-                    +'<div>Coordinates: '+latlng.latlng[0]+', '+latlng.latlng[1]+'</div>'                    
-                    });
-            marker.addListener('click', function(){
-                    InfoWindow.open(map, marker);
-                    });
-            
-            }
-                    
-        }     
+       
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-    })
-}
-      
-  
+      }
+          var locations = [];
+          var names = [];
+          fetch("https://restcountries.eu/rest/v2/all")
+            .then(res => res.json())
+            .then(data => initialize(data))
+            .catch(err => console.log("Error:", err));
+        function initialize(countriesData) {
+            countries = countriesData;
+            
+            countries.forEach(function (latlng, i, alpha3Code){
+                locations.push(countries[i].latlng);
+                names.push(countries[i].name);
+                // console.log(countries[i].latlng);
+             
+             });
+            
+        } 
+        
