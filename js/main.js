@@ -3,7 +3,7 @@ function initMap() {
 
       var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 13,
         center: latlng
       });
       var marker1 = new google.maps.Marker({
@@ -41,7 +41,7 @@ function initMap() {
            })
            return clasterData;
       }
-      
+
       fetch("https://restcountries.eu/rest/v2/all")
         .then(res => res.json())
         .then(data => initialize(data))
@@ -168,7 +168,7 @@ function initMap() {
           function func() {
                 document.getElementById('pac-card').style.opacity = '1';
           }
-          setTimeout(func, 1000);
+          setTimeout(func, 20);
   });
 
  
