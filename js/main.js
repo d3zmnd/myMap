@@ -1,7 +1,4 @@
-document.getElementById('pac-card').style.opacity = '0';
 function initMap() {
-   
-
   navigator.geolocation.getCurrentPosition(function(position) {
 
       var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -21,11 +18,7 @@ function initMap() {
       marker1.addListener('click', function(){
          infoWindow.open(map, marker1); 
       })
-      
-      
-         
      function initialize(countries) {
-         
           var clasterData = [];
           var data = [];
            countries.forEach(function(countrie) {
@@ -47,8 +40,8 @@ function initMap() {
             }
            })
            return clasterData;
-
       }
+      
       fetch("https://restcountries.eu/rest/v2/all")
         .then(res => res.json())
         .then(data => initialize(data))
@@ -90,7 +83,6 @@ function initMap() {
         })
         .catch(err => console.log("Error:", err));
 
-          document.getElementById('pac-card').style.opacity = '1';
           var card = document.getElementById('pac-card');
           var input = document.getElementById('pac-input');
           var rad = document.getElementById('radius');
@@ -173,5 +165,11 @@ function initMap() {
             }) 
 
       });
+          function func() {
+                document.getElementById('pac-card').style.opacity = '1';
+          }
+          setTimeout(func, 1000);
   });
+
+ 
 }
