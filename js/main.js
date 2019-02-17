@@ -3,7 +3,8 @@ function initMap(position) {
         let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let map = new google.maps.Map(document.getElementById('map'), {
               zoom: 13,
-              center: latlng
+              center: latlng,
+              mapTypeControl:false
         }); 
         let markerCurrentPosition = new google.maps.Marker({
           position: latlng,
@@ -13,14 +14,12 @@ function initMap(position) {
         let infoWindow = new google.maps.InfoWindow({
           content: '<h2>Your current location!</h2>'
         });
-        markerCurrentPosition.addListener('click', function () {
+        markerCurrentPosition.addListener('click', markerPos = () => {
           infoWindow.open(map, markerCurrentPosition);
         })
         dataObj(map);
-        
         if (map !== undefined) {
-          gAutocomplite(map);
-          
+          googleAutocomplite(map);
         }
     })
 }
@@ -63,7 +62,6 @@ function dataObj(map) {
     })
     .catch(err => console.log("Error:", err));
 
-
   const initialize = (countries) => {
     let clasterData = [];
     let data = [];
@@ -88,21 +86,18 @@ function dataObj(map) {
   }
 }
 
-function gAutocomplite(map){
+function googleAutocomplite(map){
     let card = document.getElementById('pac-card');
-    setTimeout(function () {
+    setTimeout(timeot= ()=> {
       card.style.display = 'inline';
-    }, 1000);
-    
+    }, 1500);
     let input = document.getElementById('pac-input');
     let rad = document.getElementById('radius');
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
     let autocomplete = new google.maps.places.Autocomplete(input);
-
     autocomplete.bindTo('bounds', map);
     autocomplete.setFields(
       ['address_components', 'geometry', 'name']);
-
     let infowindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
     infowindow.setContent(infowindowContent);
@@ -120,12 +115,10 @@ function gAutocomplite(map){
       radius: valueOfRad
     });
 
-    autocomplete.addListener('place_changed', function () {
-
+    autocomplete.addListener('place_changed', info = () => {
       infowindow.close();
       circle.setMap(null);
       marker.setVisible(false);
-
       let place = autocomplete.getPlace();
       if (!place.geometry) {
         window.alert("No details available for input: '" + place.name + "'");
@@ -137,10 +130,8 @@ function gAutocomplite(map){
         map.setCenter(place.geometry.location);
         map.setZoom(8);
       }
-
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
-
       let address = '';
       if (place.address_components) {
 
@@ -165,16 +156,12 @@ function gAutocomplite(map){
           }
         }
       })
-
-
       infowindowContent.children['place-name'].textContent = place.name;
       infowindowContent.children['place-address'].textContent = address;
       infowindow.open(map, marker);
-
-      marker.addListener('click', function () {
+      marker.addListener('click', infoWindow = () => {
         infowindow.open(map, marker);
       })
-
     });
 }
       
