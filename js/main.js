@@ -4,12 +4,23 @@ function initMap(position) {
         let map = new google.maps.Map(document.getElementById('map'), {
               zoom: 13,
               center: latlng,
-              mapTypeControl:false
-        }); 
+              mapTypeControl: false,
+              zoomControl: true,
+              zoomControlOptions:{
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+              },
+              streetViewControl: true,
+              fullscreenControl: true,
+              fullscreenControlOptions:{
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+              },
+        });        
+        
         let markerCurrentPosition = new google.maps.Marker({
           position: latlng,
           map: map,
-          title: "Your current location!"
+          title: "Your current location!",
+          animation: google.maps.Animation.DROP
         });
         let infoWindow = new google.maps.InfoWindow({
           content: '<h2>Your current location!</h2>'
@@ -29,6 +40,7 @@ function dataObj(map) {
     .then(res => res.json())
     .then(data => initialize(data))
     .then(res => {
+      console.log(res);
       let markers = res.map(marker => {
         return new google.maps.Marker({
           name: marker.name,
@@ -40,10 +52,12 @@ function dataObj(map) {
           timezones: marker.timezones,
           coord: marker.position
         });
+        
       });
+     
       markers.forEach(marker => {
         let contentString = `
-                  <h2>Country: ${marker.name}</h2>
+                <h2>Country: ${marker.name}</h2>
                 <div>Capital: ${marker.capital}</div>
                 <div>Population: ${marker.population}</div>
                 <div>Alpha3Code: ${marker.alpha3Code}</div>
@@ -53,6 +67,7 @@ function dataObj(map) {
         let infowindow = new google.maps.InfoWindow({
           content: contentString
         });
+        
         marker.addListener('click', () => {
           infowindow.open(map, marker);
         });
@@ -103,6 +118,7 @@ function googleAutocomplite(map){
     infowindow.setContent(infowindowContent);
     let marker = new google.maps.Marker({
       map: map,
+      animation: google.maps.Animation.DROP
     });
     let valueOfRad;
     let circle = new google.maps.Circle({
@@ -114,7 +130,6 @@ function googleAutocomplite(map){
       map: map,
       radius: valueOfRad
     });
-
     autocomplete.addListener('place_changed', info = () => {
       infowindow.close();
       circle.setMap(null);
