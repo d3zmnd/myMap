@@ -40,7 +40,7 @@ function dataObj(map) {
     .then(res => res.json())
     .then(data => initialize(data))
     .then(res => {
-      console.log(res);
+    
       let markers = res.map(marker => {
         return new google.maps.Marker({
           name: marker.name,
