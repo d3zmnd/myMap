@@ -1,2 +1,2 @@
 # myMap
-myMap
+Google maps API
